@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Workspace</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!-- Optional theme -->
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<div class="fixed-nav-bar">
+  <ul class="nav navbar-nav nav_ul" style="float:left">
+    <li class="active"> <%= link_to "home", "/" %></li>
+    <%if user_signed_in? %>
+      <li><%= link_to "글쓰기", "/posts/new"%></li>
+    <%end%>
+  </ul>
+  
+  <ul class="nav navbar-nav navbar-right" style="float:right">
+    <% if user_signed_in? %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_user.email %> <b class="caret"></b></a>
+        <ul class="dropdown-menu" style = "font-size:15px;">
+          <li><%= link_to "회원정보수정", edit_user_registration_path %></li>
+          <li><%= link_to "로그아웃", destroy_user_session_path, method: :delete, data: { confirm: "로그아웃 하시겠습니까?" } %></li>
+        </ul>
+      </li>
+    <% else %>
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 로그인하기 <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+        <%= form_tag('/users/sign_in', class: "form-signin", method: "post") do%>
+          
+                <input type="text" id="inputEmail" class="form-control" placeholder="아이디" name="user[email]"  autofocus style="border: 1px solid #00BFFF;">
+                <input type="password" id="inputPassword" class="form-control" name="user[password]" placeholder="******" style="border: 1px solid #00BFFF;">
+                
+                <%= submit_tag('로그인', class: "btn btn-lg btn-primary btn-block btn-signin") %>
+                <span id="reauth-email" class="reauth-email"></span>
+            
+            <button type="button" class ="btn btn-lg btn-primary btn-block btn-signin" onclick="location.href='/users/sign_up' ">회원가입</button>
+            <%end%>
+            
+            <a href="/users/password/new" class="forgot-password" style="text-decoration:none; font-size:15px; font-weight:600;">&nbsp;  &nbsp;Forgot the password?</a>
+            
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<br><br><br>
+<%= yield %>
+
+</body>
+</html>
