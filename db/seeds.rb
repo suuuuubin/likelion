@@ -10,7 +10,7 @@
     User.create(email: "a#{i}@aaa", password: "12341234", password_confirmation: "12341234")
     
     (1..3).each do |p|
-     Post.create(user_id: i, title: "#{i}가 쓴 p번째 글", content: "#{i}가 쓴 p번째 글")
+     Post.create(user_id: i, title: "#{i}가 쓴 #{p}번째 글", content: "#{i}가 쓴 p번째 글")
     end
 end
 
